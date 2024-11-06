@@ -88,13 +88,10 @@ def view_products(products):
     for product in products:
         print(product)
 def main():
-    # Test users
     users = [
         User("admin", "admin123", "Admin"),
         User("user", "user123", "User")
     ]
-    
-    # Test products list
     products = []
     
     while True:
@@ -173,7 +170,6 @@ def add_product(products):
     except ValueError:
         print("Invalid input. Please enter numeric values for price and stock quantity.")
 def main():
-    # Test products list
     products = []
     
     while True:
@@ -213,7 +209,5 @@ def main():
                     break
                 else:
                     print("Invalid choice, please try again.")
-
-# Run the main function
 if __name__ == "__main__":
     main()
