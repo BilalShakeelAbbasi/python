@@ -35,13 +35,13 @@ def admin_menu():
     print("2. Edit Product")
     print("3. Delete Product")
     print("4. View Products")
-    print("5. Adjust Stock")
-    print("6. Logout")
+    print("5. Logout")
 
 def user_menu():
     print("\nUser Menu:")
     print("1. View Products")
-    print("2. Logout")
+    print("2. Purchase Product")
+    print("3. Logout")
 
 def add_product(products):
     try:
@@ -90,13 +90,24 @@ def check_stock_levels(products):
         if product.stock_quantity < LOW_STOCK_THRESHOLD:
             print(f"Warning: Low stock for {product.name} (ID: {product.product_id}) - Only {product.stock_quantity} left!")
 
-def adjust_stock(products):
-    product_id = input("Enter product ID to adjust stock: ")
+def purchase_product(products):
+    product_id = input("Enter product ID to purchase: ")
     for product in products:
         if product.product_id == product_id:
-            adjustment = int(input(f"Enter stock adjustment for {product.name} (negative to reduce, positive to increase): "))
-            product.stock_quantity += adjustment
-            print(f"New stock for {product.name}: {product.stock_quantity}")
+            try:
+                quantity = int(input(f"Enter quantity to purchase for {product.name}: "))
+                if quantity <= 0:
+                    print("Please enter a positive quantity.")
+                    return
+                if product.stock_quantity >= quantity:
+                    product.stock_quantity -= quantity
+                    total_cost = quantity * product.price
+                    print(f"Purchased {quantity} units of {product.name}. Total cost: ${total_cost}")
+                    print(f"Remaining stock for {product.name}: {product.stock_quantity}")
+                else:
+                    print("Insufficient stock available for this purchase.")
+            except ValueError:
+                print("Invalid quantity. Please enter a whole number.")
             return
     print("Product not found.")
 
@@ -131,8 +142,6 @@ def main():
                     view_products(products)
                     check_stock_levels(products)
                 elif choice == "5":
-                    adjust_stock(products)
-                elif choice == "6":
                     break
                 else:
                     print("Invalid choice, please try again.")
@@ -145,6 +154,8 @@ def main():
                 if choice == "1":
                     view_products(products)
                 elif choice == "2":
+                    purchase_product(products)
+                elif choice == "3":
                     break
                 else:
                     print("Invalid choice, please try again.")
