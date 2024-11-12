@@ -1,0 +1,11 @@
+version: "3.8"
+
+services:
+  ims_app:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: ims_container
+    stdin_open: true  # Keeps the container open for user input
+    tty: true         # Allocates a pseudo-TTY for interactive use
+    entrypoint: ["python", "python.py"]  # Set entrypoint to handle inputs better
